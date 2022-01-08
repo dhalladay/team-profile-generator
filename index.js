@@ -31,7 +31,7 @@ CreateTeam.prototype.startPrompt = function() {
     },
     {
       type: 'input',
-      name: 'manager-id',
+      name: 'id',
       message: "What is the team manager's employee ID?",
       validate: managerIdInput => {
         if (managerIdInput) {
@@ -44,7 +44,7 @@ CreateTeam.prototype.startPrompt = function() {
     },
     {
       type: 'input',
-      name: 'manager-email',
+      name: 'email',
       message: "What is the team manager's email?",
       validate: managerEmailInput => {
         if (managerEmailInput) {
