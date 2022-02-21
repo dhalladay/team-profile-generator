@@ -12,19 +12,18 @@ function CreateTeam() {
   this.team = [];
 }
 
-CreateTeam.prototype.startPrompt = function() {
-
-  return inquirer
+CreateTeam.prototype.addMember = function(role) {
+  inquirer
     .prompt([
     {
       type: 'input',
       name: 'name',
-      message: "What is the team manager's name?",
-      validate: managerNameInput => {
-        if (managerNameInput) {
+      message: `What is the ${role}'s name?`,
+      validate: nameInput => {
+        if (nameInput) {
           return true;
         } else {
-          console.log("You must enter the manager's name.");
+          console.log(`You must enter the ${role}'s name.`);
           return false;
         }
       }
@@ -32,12 +31,12 @@ CreateTeam.prototype.startPrompt = function() {
     {
       type: 'input',
       name: 'id',
-      message: "What is the team manager's employee ID?",
-      validate: managerIdInput => {
-        if (managerIdInput) {
+      message: `What is the ${role}'s employee ID?`,
+      validate: idInput => {
+        if (idInput) {
           return true;
         } else {
-          console.log("You must enter the manager's ID.");
+          console.log(`You must enter ${role}'s ID.`);
           return false;
         }
       }
@@ -45,21 +44,38 @@ CreateTeam.prototype.startPrompt = function() {
     {
       type: 'input',
       name: 'email',
-      message: "What is the team manager's email?",
-      validate: managerEmailInput => {
-        if (managerEmailInput) {
+      message: `What is the ${role}'s email address?`,
+      validate: emailInput => {
+        if (emailInput) {
           return true;
         } else {
-          console.log("You must enter the manager's ID.");
+          console.log(`You must enter the ${role}'s email address.`);
           return false;
         }
       }
     },
   ])
+  .then((data, role))
 };
 
+CreateTeam.prototype.roleBasedQuestions = function(data, role) {
+  if (role === 'Manager') {
+    inquirer
+      .prompt ([
+        {
+        type: 'input',
+        name: 'officeNum',
+        message: `What is the office number?`,
+        validate: officeNumInput => {
+          if (officeNumInput) {
+            return true;
+          } else {
+            console.log(`You must enter the office number`);
+            return false;
+          }
+        }
+      }])
+  } 
+}
 new CreateTeam()
-  .startPrompt()
-  .then(data => {
-    console.log(data)
-  });
+  .addMember('Manager')
